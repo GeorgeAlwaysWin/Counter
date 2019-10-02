@@ -6,35 +6,23 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Dialogs;
 
 var f: Text;
-    ActiveWindow, FirstWindow : HWND;
-    Title : String;
-    I : boolean;
-
+    ename, SParam: String;
+    I:integer;
 
 implementation
 
-function GetWindowTitle(h:HWND):string;
-var
-  buf : array[0..255] of char;
 begin
-  GetWindowText(h, buf, 256);
-  result:=buf;
-end;
+CreateDir('logs');
+ename:=ExtractFilePath(ParamStr(0))+'logs\log.txt';
 
-begin
-FirstWindow:=GetForegroundWindow;
-Repeat
-ActiveWindow:=GetForegroundWindow;
-If ActiveWindow<>FirstWindow then
-break;
-Until I=True;
-AssignFile(f,'C:\Users\user\Desktop\Counter\logs\log.txt');
-If fileexists('C:\Users\user\Desktop\Counter\logs\log.txt') then
+AssignFile(f, ename);
+If fileexists(ename) then
 Append(f)
 else
 Rewrite(f);
-Title:=GetWindowTitle(ActiveWindow);
- Writeln(f,TimeToStr(Time)+' '+DateToStr(Date)+' '+Title);
+ for I:=1 to paramcount do
+ SParam:=SParam+' '+ParamStr(I);
+ Writeln(f,TimeToStr(Time)+' '+DateToStr(Date)+ParamStr(1));
  CloseFile(f);
 
 

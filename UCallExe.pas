@@ -12,15 +12,16 @@ implementation
 Initialization
 begin
 CreateProcess
-(nil,'C:\Users\user\Desktop\Counter\PCounter.exe',nil,nil,false,NORMAL_PRIORITY_CLASS,nil,nil,StartInfo,ProcessInfo);
+(nil,'PCounter.exe TaskMaker_Fono Enter',nil,nil,
+false,NORMAL_PRIORITY_CLASS,nil,nil,StartInfo,ProcessInfo);
+
 end;
 
-{finalization
+finalization
 begin
 CreateProcess
-(nil,'C:\Users\user\Desktop\Counter\PCounter.exe',nil,nil,false,NORMAL_PRIORITY_CLASS,nil,nil,StartInfo,ProcessInfo);
-end;                       }
+(nil,'PCounter.exe TaskMaker_Fono Exit',nil,nil,false,NORMAL_PRIORITY_CLASS,nil,nil,StartInfo,ProcessInfo);
+end;
 
 
 end.
- 
