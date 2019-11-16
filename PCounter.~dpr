@@ -3,7 +3,7 @@ program PCounter;
 {%ToDo 'PCounter.todo'}
 
 uses
-
+  Forms,
   UCounter in 'UCounter.pas';
 
 {$R *.res}

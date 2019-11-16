@@ -12,6 +12,9 @@ var f, foff: Text;
     TcpC: TTcpClient;
     online: boolean;
 
+Const Host='192.168.88.186';
+      Port='8888';
+
 implementation
 
 procedure SendLog;
@@ -61,44 +64,45 @@ CreateDir('logs');
 ename:=ExtractFilePath(ParamStr(0))+'logs\log.txt';
 enameoff:=ExtractFilePath(ParamStr(0))+'logs\offlinelog.txt';
 
- for I:=1 to paramcount do
+ for I:=3 to paramcount do
  SParam:=SParam+' '+ParamStr(I);
 
+  AssignFile(foff, enameoff);
+  If fileexists(enameoff) then
+  Append(foff)
+  else
+  Rewrite(foff);
+
+  Writeln(foff,TimeToStr(Time)+' '+DateToStr(Date)+SParam);
+
+
   TcpC := TTcpClient.Create(Application);
-  TcpC.RemoteHost:='127.0.0.1';
-  TcpC.RemotePort:='8888';
+  {TcpC.RemoteHost:=Host;
+  TcpC.RemotePort:=Port; }
+  TcpC.RemoteHost:=ParamStr(1);
+  TcpC.RemotePort:=ParamStr(2);
   online:=true;
 
-GetLog;
-
-AssignFile(f, ename);
-If fileexists(ename) then
-Append(f)
-else
-Rewrite(f);
-
-AssignFile(foff, enameoff);
-If fileexists(enameoff) then
-Append(foff)
-else
-Rewrite(foff);
-
-Writeln(foff,TimeToStr(Time)+' '+DateToStr(Date)+SParam);
+  GetLog;
 
 if online=true then
 begin
+
+  AssignFile(f, ename);
+  If fileexists(ename) then
+  Append(f)
+  else
+  Rewrite(f);
+
   reset(foff);
   while not eof (foff) do begin
   Readln(foff,soff);
   writeln(f, soff);
   end;
+  CloseFile(f);
+
+  SendLog;
 end;
-
-
-CloseFile(f);
-
-if online=true then
-SendLog;
 
 if online=true then
 Rewrite(foff);

@@ -4,13 +4,17 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Sockets, StdCtrls;
+  Dialogs, Sockets, StdCtrls, ExtCtrls;
 
 type
   TForm1 = class(TForm)
     TcpServer1: TTcpServer;
+    Host: TLabeledEdit;
+    Port: TLabeledEdit;
+    Button1: TButton;
     procedure TcpServer1Accept(Sender: TObject;
       ClientSocket: TCustomIpClient);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,5 +62,11 @@ begin
   end;
 
 
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+TcpServer1.LocalHost:=Host.Text;
+TcpServer1.LocalPort:=Port.Text;
+end;
 
 end.

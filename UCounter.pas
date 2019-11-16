@@ -12,6 +12,9 @@ var f, foff: Text;
     TcpC: TTcpClient;
     online: boolean;
 
+Const Host='192.168.88.186';
+      Port='8888';
+
 implementation
 
 procedure SendLog;
@@ -61,7 +64,7 @@ CreateDir('logs');
 ename:=ExtractFilePath(ParamStr(0))+'logs\log.txt';
 enameoff:=ExtractFilePath(ParamStr(0))+'logs\offlinelog.txt';
 
- for I:=1 to paramcount do
+ for I:=3 to paramcount do
  SParam:=SParam+' '+ParamStr(I);
 
   AssignFile(foff, enameoff);
@@ -74,8 +77,10 @@ enameoff:=ExtractFilePath(ParamStr(0))+'logs\offlinelog.txt';
 
 
   TcpC := TTcpClient.Create(Application);
-  TcpC.RemoteHost:='127.0.0.1';
-  TcpC.RemotePort:='8888';
+  {TcpC.RemoteHost:=Host;
+  TcpC.RemotePort:=Port; }
+  TcpC.RemoteHost:=ParamStr(1);
+  TcpC.RemotePort:=ParamStr(2);
   online:=true;
 
   GetLog;
